@@ -3,7 +3,24 @@ This is a front end workflow testing script. This relies on [chrome webdriver](h
 
 ## Install modules
 ```terminal
-pip install splinter random lorem
+pip install splinter
+pip install lorem
+```
+
+#### Fail safe way (leveraging pipenv)
+```terminal
+pip install pipenv
+
+# this installs the modules
+pipenv sync
+
+# this starts the python environment
+pipenv shell
+```
+
+To exit pipenv just type
+```terminal
+exit
 ```
 
 ## To modify
