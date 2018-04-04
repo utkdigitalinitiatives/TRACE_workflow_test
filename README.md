@@ -23,7 +23,7 @@ To exit pipenv just type
 exit
 ```
 
-## To modify
+## To modify submit.py
 Use the 'SET config section'
 
 ```terminal
