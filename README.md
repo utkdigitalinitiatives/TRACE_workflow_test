@@ -16,6 +16,9 @@ pipenv sync
 
 # this starts the python environment
 pipenv shell
+
+# To start the script 
+pipenv run python submit.py
 ```
 
 To exit pipenv just type
