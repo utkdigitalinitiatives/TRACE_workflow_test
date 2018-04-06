@@ -132,8 +132,6 @@ while (counter < how_many_submissions_to_submit):
         counter = counter + 1
         # input("Press Enter to continue...")
 
-
-
 ########### END user submissions ###########
 
 
@@ -180,14 +178,14 @@ with Browser('chrome') as browser:
     browser.find_by_id('edit-submit-accepted').click()
     browser.find_by_id('edit-confirm-accept').click()
     print ('\tsubmissions accepted')
-
     # Time to Publish 1
-    print ('\nnavigates to Items to Publish list')
-    browser.click_link_by_text('Items to Publish')
-    browser.find_by_xpath('//*[@id="islandora-simple-workflow-manage-form"]/div/div/table[2]/tbody/tr[1]/td[1]/div').click()
-    print ('\tselects the 1st item and submits')
-    button = browser.click_link_by_id('edit-submit-selected')
-    button = browser.click_link_by_id('edit-confirm-submit')
-    time.sleep(5)
+    for j in range(3):
+        print ('\nnavigates to Items to Publish list')
+        browser.click_link_by_text('Items to Publish')
+        browser.find_by_xpath('//*[@id="islandora-simple-workflow-manage-form"]/div/div/table[2]/tbody/tr[1]/td[1]/div').click()
+        print ('\tselects the 1st item and submits')
+        button = browser.click_link_by_id('edit-submit-selected')
+        button = browser.click_link_by_id('edit-confirm-submit')
+        time.sleep(5)
 print ('\n\n all done!')
 ########### END thesis manager edit tests ###########
