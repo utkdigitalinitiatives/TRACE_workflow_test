@@ -14,16 +14,19 @@ pip install pipenv
 # this installs the modules
 pipenv sync
 
-# this starts the python environment
-pipenv shell
-
 # To start the script 
 pipenv run python submit.py
 ```
 
-To exit pipenv just type
+To start or exit pipenv just type
 ```terminal
+
+# this starts the python environment
+pipenv shell
+
+# this will exit the current pipenv
 exit
+
 ```
 
 ## To modify submit.py
