@@ -1,30 +1,45 @@
 # TRACE Workflow Test
 This is a front end workflow testing script. This relies on [chrome webdriver](https://splinter.readthedocs.io/en/latest/drivers/chrome.html) & [Splinter](https://splinter.readthedocs.io/en/latest/)
+It’s important to note that you also need to have Google Chrome installed in your machine.
 
-## Install modules
-```terminal
-pip install splinter
-pip install lorem
+## Install software and modules
+Required: __chrome-driver__, [splinter](https://pypi.python.org/pypi/splinter), [lorem](https://pypi.python.org/pypi/loremipsum) <br/>
+
+
+## Setup Environment
+[WINDOWS 10 install Video Tutorial __Chrome-Driver__](https://youtu.be/dz59GsdvUF8)
+* Create a folder `c:\webdrivers`
+* System Properties > Advanced System Settings > Environment Variables > System Variables > Path > Edit > New
+  * c:\webdrivers
+  * Click OK/OK/OK
+* Go to and download "Latest Release" > chromedriver_win32.zip
+* Zip will extract to a single executable file 'chromedriver'
+* Extract file to "c:\webdrivers/chromedriver"
+* To test install open a command terminal and type `chromedriver` and it should start and press `ctrl c` to quit test.
+
+### Install selenium (not recommended)
+Chrome WebDriver is provided by Selenium2. To use it, you need to install Selenium2 via pip
+```shell
+$ pip install selenium
+$ pip install splinter
+$ pip install lorem
 ```
 
-#### Fail safe way (leveraging pipenv)
+#### Fail safe way (recommended)
 ```terminal
-pip install pipenv
+$ pip install pipenv
 
 # this installs the modules
-pipenv sync
+$ pipenv sync
 
 # To start the script in the pypenv and exit when complete
-pipenv run python submit.py
+$ pipenv run python submit.py
 ```
 
-#### To start or exit a pipenv
+#### To Run this app
 ```terminal
-# this starts the python environment but should not be run with the command above.
-pipenv shell
-
-# this will exit the current pipenv
-exit
+# To start this script
+$ pipenv run python submit.py
 
 ```
 
