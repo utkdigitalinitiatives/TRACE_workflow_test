@@ -1,17 +1,24 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# Required splinter, random, lorem,
-# $ pip install splinter random lorem
+# Required splinter, random, transliterate
+# $ pip install splinter random transliterate
 # ChromeDriver under FreeBSD https://stackoverflow.com/questions/9861830/chromedriver-under-freebsd
 # Please note that if you prefer to use Firefox you will need to install Gekodriver https://github.com/mozilla/geckodriver/releases
 # How to setup: http://splinter.readthedocs.io/en/latest/drivers/chrome.html
+# To run: pipenv run python submit.py
+
 
 import time
 import random
-import lorem
+from transliterate import translit, get_available_language_codes
+from transliterate.contrib.apps.translipsum import TranslipsumGenerator
 from splinter import Browser
 import os
+
+# Randomly select a language. EN will cause errors at this time.
+languages = ['el', 'hy', 'ka', 'ru']
+lorem = TranslipsumGenerator(language_code=random.choice(languages))
 
 # Current working dirrectory
 dir_path = os.getcwd()
@@ -57,7 +64,7 @@ if how_many_submissions_to_submit < 3:
 
 ########### user submissions ###########
 counter = 0
-print (' ^^^^^^^^^^^ starting with user submissions ^^^^^^^^^^^ ')
+print ('\n\n\n ^^^^^^^^^^^ starting with user submissions ^^^^^^^^^^^ ')
 while (counter < how_many_submissions_to_submit):
     with Browser('chrome') as browser:
         # Visit URL
@@ -79,7 +86,7 @@ while (counter < how_many_submissions_to_submit):
 
         # Filling out the form.
         print ('\tfilling out form')
-        browser.fill('titleInfo[title]', random.choice(special_chars)+' '+str(time.strftime("%m/%d/%Y %H:%M:%S"))+' '+lorem.sentence())
+        browser.fill('titleInfo[title]', random.choice(special_chars) + ' ' + str(time.strftime("%m/%d/%Y %H:%M:%S")) + ' ' + lorem.generate_sentence())
         browser.fill('name[namePartGiven]', random.choice(first_names))
         browser.fill('name[namePartFamily]', random.choice(last_names))
         browser.fill('name[namePartTermsofAddress]', random.choice(name_suffix))
@@ -96,8 +103,8 @@ while (counter < how_many_submissions_to_submit):
         # Committee Member
         browser.fill('committee[0][namePartGiven]', random.choice(name_of_person))
         browser.fill('committee[0][namePartFamily]', random.choice(name_of_person))
-        browser.fill('abstract', lorem.paragraph())
-        browser.fill('note', lorem.paragraph())
+        browser.fill('abstract', lorem.generate_paragraph())
+        browser.fill('note', lorem.generate_paragraph())
 
         # Keyword(s) generator
         keywords_count = random.randint(0, 5)
@@ -139,7 +146,7 @@ while (counter < how_many_submissions_to_submit):
 
 ########### thesis manager edit tests ###########
 with Browser('chrome') as browser:
-    print ('\n\n^^^^^^^^^^^ Now Thesis Manager ^^^^^^^^^^^ \n logging in')
+    print ('\n\n^^^^^^^^^^^ Now Thesis Manager ^^^^^^^^^^^ \n \tlogging in')
     browser.visit(url)
     browser.fill('name', 'thesis_manager')
     browser.fill('pass', 'thesis_manager')
@@ -173,7 +180,7 @@ with Browser('chrome') as browser:
         browser.visit(url)
     # Time to Accept a few
     browser.visit(url)
-    print ('\nnavigates to Items to accept list and clicks check boxes for the first 2 items')
+    print ('\n\tnavigates to Items to accept list and clicks check boxes for the first 2 items')
     browser.click_link_by_text('Items to Accept')
     browser.find_by_xpath('//*[@id="trace-ext-workflow-form"]/div/table[2]/tbody/tr[1]/td[1]/div')[0].click()
     browser.find_by_xpath('//*[@id="trace-ext-workflow-form"]/div/table[2]/tbody/tr[2]/td[1]/div')[0].click()
@@ -182,12 +189,24 @@ with Browser('chrome') as browser:
     print ('\tsubmissions accepted')
     # Time to Publish 1
     for j in range(3):
-        print ('\nnavigates to Items to Publish list')
-        browser.click_link_by_text('Items to Publish')
-        browser.find_by_xpath('//*[@id="islandora-simple-workflow-manage-form"]/div/div/table[2]/tbody/tr[1]/td[1]/div').click()
-        print ('\tselects the 1st item and submits')
-        button = browser.click_link_by_id('edit-submit-selected')
-        button = browser.click_link_by_id('edit-confirm-submit')
+        print ('\n\t\tnavigates to Items to Publish list')
+        print ('\tGoing to http://localhost:8000/admin/islandora/tools/simple_workflow/list')
+        browser.visit('http://localhost:8000/admin/islandora/tools/simple_workflow/list')
+        # From Profile Page click the collection to submit to.
+        browser.find_by_xpath('//*[@id="islandora-simple-workflow-manage-form"]/div/div/table[2]/tbody/tr[1]/td[1]').click()
+        print ('\tselected the 1st item and submitting')
+        # Delay could cause a fetch to fail so this avoids the delay timeout failure.
+        def submit_this(button):
+            print(button)
+            if browser.find_by_id(button):
+                print("\tYes, " + button + " was found!")
+                browser.find_by_id(button).click()
+            else:
+                print("\tNo, " + button + " wasn't found... Let's try again.")
+                time.sleep(5)
+                submit_this(button)
+        submit_this("edit-submit-selected")
+        submit_this("edit-confirm-submit")
         time.sleep(5)
-print ('\n\n all done!')
+print ('\n\n\t\t\t all done!\n\n\n\n')
 ########### END thesis manager edit tests ###########

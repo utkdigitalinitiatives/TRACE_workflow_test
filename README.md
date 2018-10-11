@@ -3,8 +3,7 @@ This is a front end workflow testing script. This relies on [chrome webdriver](h
 It’s important to note that you also need to have Google Chrome installed in your machine.
 
 ## Install software and modules
-Required: __chrome-driver__, [splinter](https://pypi.python.org/pypi/splinter), [lorem](https://pypi.python.org/pypi/loremipsum) <br/>
-
+Required: __chrome-driver__, [splinter](https://pypi.python.org/pypi/splinter), [transliterate](https://pypi.org/project/transliterate/) <br/>
 
 ## Setup Environment
 [WINDOWS 10 install Video Tutorial __Chrome-Driver__](https://youtu.be/dz59GsdvUF8)
@@ -17,12 +16,12 @@ Required: __chrome-driver__, [splinter](https://pypi.python.org/pypi/splinter), 
 * Extract file to "c:\webdrivers/chromedriver"
 * To test install open a command terminal and type `chromedriver` and it should start and press `ctrl c` to quit test.
 
-### Install selenium (not recommended)
+### Install selenium
 Chrome WebDriver is provided by Selenium2. To use it, you need to install Selenium2 via pip
 ```shell
 $ pip install selenium
 $ pip install splinter
-$ pip install lorem
+$ pip install transliterate
 ```
 
 #### Fail safe way (recommended)
@@ -66,3 +65,6 @@ __how_many_submissions_to_submit__<br/>This is how many times you want the scrip
 
 ### Sometime the script with fail because of a timeout.
 Just restart the script and it will work.
+
+##### Notes:
+Python's lorem isn't support for python 3.6+. Using transliterate is used because has a lorem ipsum feature and can provide the ability to test a varying set of unicode characters in addition to the already included characters.
