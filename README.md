@@ -68,3 +68,6 @@ Just restart the script and it will work.
 
 ##### Notes:
 Python's lorem isn't support for python 3.6+. Using transliterate is used because has a lorem ipsum feature and can provide the ability to test a varying set of unicode characters in addition to the already included characters.
+
+### Demo
+[![Alt text](https://i9.ytimg.com/vi/BRRwEPhGakw/mq2.jpg?sqp=CPDXzN4F&rs=AOn4CLDsf0nSxNYhOcpz5QpUkAdFCaO0BA)](https://youtu.be/BRRwEPhGakw)
